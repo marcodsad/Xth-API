@@ -1,0 +1,6 @@
+#N canvas 234 171 962 603 24;
+#X floatatom 101 43 5 0 0 0 - - -, f 5;
+#X floatatom 127 259 5 0 0 0 - - -, f 5;
+#X obj 101 159 flowAverage;
+#X connect 0 0 2 0;
+#X connect 2 0 1 0;

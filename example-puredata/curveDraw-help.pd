@@ -1,0 +1,8 @@
+#N canvas 234 171 962 603 24;
+#X floatatom 101 43 5 0 0 0 - - -;
+#X floatatom 127 259 10 0 0 0 - - -;
+#X obj 101 159 curveDraw;
+#X obj 101 73 / 100;
+#X connect 0 0 3 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;

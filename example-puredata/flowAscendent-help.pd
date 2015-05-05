@@ -1,0 +1,16 @@
+#N canvas 234 171 962 603 24;
+#X floatatom 146 102 5 0 0 0 - - -;
+#X floatatom 127 259 0 0 0 0 - - -;
+#X obj 101 159 flowAscendent;
+#X msg 47 21 0;
+#X msg 257 24 100;
+#X msg 190 19 50;
+#X msg 116 21 25;
+#X obj 127 292 print;
+#X connect 0 0 2 0;
+#X connect 1 0 7 0;
+#X connect 2 0 1 0;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 0 0;
+#X connect 6 0 0 0;
