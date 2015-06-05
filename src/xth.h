@@ -10,6 +10,7 @@
 #include <math.h>
 #include <float.h>
 
+
 using namespace std;
 
 
@@ -108,12 +109,33 @@ public:
     void sendMidiMmgData(xthMmg mmgVals);
     void sendMidiTempData(float temp);
     void sendMidiAccelData(xthAccel accelVals);
-    
+
+
+    //////////////////////////
+    // SERIAL				 //
+	//////////////////////////
+	static int open_serial(unsigned int com_num, xthSerial *serial);
+	static int close_serial(xthSerial *serial);
+
+	static float set_baudrate(xthSerial *serial, float baud);
+	static float set_bits(xthSerial *serial, int nr);
+	static float set_parity(xthSerial *serial,int n);
+	static float set_stopflag(xthSerial *serial, float nr);
+	static int set_ctsrts(xthSerial *serial, int nr);
+	static int set_dtr(xthSerial *serial, int nr);
+	static int set_rts(xthSerial *serial, int nr);
+	static int set_xonxoff(xthSerial *serial, int nr);
+	static int set_hupcl(xthSerial *serial, int nr);
+
+
+
 private:
 
     xthConfig			config;
     xthParameters		parameters;
 	xthDataspace		dataspace;
+    xthSerial			testSerial;
+    xthSerial			serial;
     
     xthState 			state;			// store current state of xth
     

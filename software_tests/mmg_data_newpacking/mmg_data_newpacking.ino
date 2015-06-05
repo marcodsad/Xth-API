@@ -276,6 +276,61 @@ inline void mmg_pack( uint16_t newvalue ){
     }
 }
 
+
+
+
+union bits2byte
+{
+  struct{
+    byte lo4: 2;
+    byte lo3: 2;
+    byte lo2: 2;
+    byte lo1: 2;
+  } bits2;
+  byte lobyte;
+};
+
+union inttobytes
+{
+  struct{
+    byte lo;
+    byte hi;
+  } parts;
+  uint16_t myint;
+};
+
+
+uint8_t index = 0;
+uint8_t lo_index = 4;
+uint8_t lo_shift = 0;
+
+bits2byte currentlowbyte;
+
+// [ highbyte 1, hb 2, hb 3, hb4 , [lo1, lo2, lo3, l4]
+void pack( uint16_t value ){
+  inttobytes unionvalue;
+  unionvalue.myint = (value << 6); // bitshift 6
+  mmgs_packed[index] = unionvalue.parts.hi; // high byte;
+  currentlowbyte.lobyte |= ( (unionvalue.parts.lo & 0xC0) >> lo_shift);
+  mmgs_packed[lo_index] = currentlowbyte.lobyte;
+
+  index++;
+  lo_shift += 2;
+  if ( lo_shift > 6 ){
+      index++; // jump over the low byte
+      lo_index += 5;
+      lo_index = lo_index%MMGPACKEDSIZE;
+      lo_shift = 0;
+      currentlowbyte.lobyte = 0; // this means that it will be reset
+  }
+  index = index % MMGPACKEDSIZE;
+}
+
+
+
+
+
+
 void send_mmg_data(){
     msgid_mmg++; // increase message counter
     msg_mmg[0] = msgid_mmg;
@@ -310,14 +365,16 @@ void setup_mmgs(){
   for (uint8_t j=0; j<MMGSAMPLES; j++ ){
     //mmgs[j] = j;
     // a single cosine cycle in 10 bit resolution
-    mmgs[j] = (((cos(2*PI*((float) j/MMGSAMPLES))) + 1) * 0.5)*1024;
+    mmgs[j] = (((cos(3*2*PI*((float) j/MMGSAMPLES))) + 1) * 0.5)*1023;
   }
 }
 
 
 void setup_mmg_packed(){
   for (uint8_t j=0; j<MMGSAMPLES; j++ ){
-    mmg_pack( mmgs[j] );
+//    mmg_pack( mmgs[j] );
+    pack( mmgs[j] );
+
   }
 }
 
