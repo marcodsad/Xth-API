@@ -346,6 +346,13 @@ void send_mmg_data(){
 //    for (uint8_t j=0; j<MMGPACKEDSIZE; j++ ){
 //	mmgs_packed[j] = j;
 //    }
+
+
+    for (uint8_t j=0; j<MMGSAMPLES; j++ ){
+  //    mmg_pack( mmgs[j] );
+      pack( mmgs[j] );
+  
+    }
     
 
 
@@ -365,7 +372,7 @@ void setup_mmgs(){
   for (uint8_t j=0; j<MMGSAMPLES; j++ ){
     //mmgs[j] = j;
     // a single cosine cycle in 10 bit resolution
-    mmgs[j] = (((cos(3*2*PI*((float) j/MMGSAMPLES))) + 1) * 0.5)*1023;
+    mmgs[j] = (((cos(4*2*PI*((float) j/MMGSAMPLES)-(PI/2))) + 1) * 0.5)*1023;
   }
 }
 
