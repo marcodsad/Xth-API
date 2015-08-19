@@ -407,7 +407,7 @@ void radio_setup(){
   meshListen( 5, addressCallback ); // address confirmation
   meshListen( 6, confCallback ); // confirmation of config
   
-  meshListen( 7, batteryCallback ); // confirmation of config
+  meshListen( 7, batteryCallback ); // battery/temperature data
   
   currentRadioReq = 0;
 }

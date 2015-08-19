@@ -1,0 +1,95 @@
+#N canvas 65 133 1538 686 10;
+#X declare -path ./lib;
+#X obj -85 190 unpackOSC;
+#X floatatom 16 207 10 0 0 1 - - -, f 10;
+#X text 22 337 for a way to send OSC over TCP or serial connections.
+;
+#N canvas 521 651 494 344 META 0;
+#X text 12 155 HELP_PATCH_AUTHORS "pd meta" information added by Jonathan
+Wilkes for Pd version 0.42.;
+#X text 12 25 LICENSE GPL v2 or later;
+#X text 12 5 KEYWORDS control list_op;
+#X text 12 45 DESCRIPTION parses lists of floats (only integers on
+[0..255]) assuming they represent OSC packets.;
+#X text 12 75 INLET_0 list of floats on [0..255];
+#X text 12 95 OUTLET_0 OSC message;
+#X text 13 115 OUTLET_1 milliseconds until timetag time;
+#X text 12 135 AUTHOR Martin Peach;
+#X restore 449 362 pd META;
+#X text 354 317 2012/02/14 Martin Peach;
+#X text 107 15 [unpackOSC] processes lists of floats (only integers
+on [0..255]) as though they were OSC packets.;
+#X text -76 134 <- usually the bytes pass over the network with [udpsend]/[udpreceive]
+\, or serial port using [comport] with [slipenc] and [slipdec];
+#X text 83 201 second outlet is timetag offset in millieconds relative
+to receiver's clock;
+#X obj -60 252 spigot;
+#X obj -110 64 udpreceive 57121;
+#X obj 0 249 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 632 445 table testsig 1024;
+#X obj 62 412 list split 4;
+#X obj 103 481 list length;
+#X floatatom 103 503 5 0 0 0 - - -, f 5;
+#X obj 42 354 routeOSC /xth;
+#X obj 42 376 routeOSC /mmg;
+#X obj 117 315 print unpacked;
+#X obj 122 272 spigot;
+#X obj 182 269 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 357 434 f;
+#X obj 398 434 + 1;
+#X msg 382 401 0;
+#X obj 357 456 * 64;
+#X obj 256 497 list prepend;
+#X obj 256 519 s testsig;
+#X obj 228 406 t l b;
+#X floatatom 357 478 5 0 0 0 - - -, f 5;
+#X obj 601 206 tabletool testsig;
+#X msg 618 138 scale \$1;
+#X msg 628 60 1;
+#X obj 628 82 / 1023;
+#X msg 713 140 scale 2;
+#X msg 780 155 offset -1;
+#X floatatom 805 305 5 0 0 0 - - -, f 5;
+#X obj 805 324 * 64;
+#X floatatom 805 346 5 0 0 0 - - -, f 5;
+#X msg 793 470 \; testsig resize \$1 \;;
+#X obj 833 393 / 2000;
+#X floatatom 833 415 5 0 0 0 - - -, f 5;
+#X obj 963 242 soundfiler;
+#X msg 925 170 write -wave -rate 2000 ./125-blocks.wav testsig;
+#X obj -47 568 declare -path ./lib;
+#X connect 0 0 8 0;
+#X connect 0 0 18 0;
+#X connect 0 1 1 0;
+#X connect 8 0 15 0;
+#X connect 9 0 0 0;
+#X connect 10 0 8 1;
+#X connect 12 1 13 0;
+#X connect 12 1 26 0;
+#X connect 13 0 14 0;
+#X connect 15 0 16 0;
+#X connect 16 0 12 0;
+#X connect 18 0 17 0;
+#X connect 19 0 18 1;
+#X connect 20 0 21 0;
+#X connect 20 0 23 0;
+#X connect 21 0 20 1;
+#X connect 22 0 20 1;
+#X connect 23 0 24 1;
+#X connect 23 0 27 0;
+#X connect 24 0 25 0;
+#X connect 26 0 24 0;
+#X connect 26 1 20 0;
+#X connect 29 0 28 0;
+#X connect 30 0 31 0;
+#X connect 31 0 29 0;
+#X connect 32 0 28 0;
+#X connect 33 0 28 0;
+#X connect 34 0 35 0;
+#X connect 35 0 36 0;
+#X connect 36 0 37 0;
+#X connect 36 0 38 0;
+#X connect 38 0 39 0;
+#X connect 41 0 40 0;
